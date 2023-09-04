@@ -3,17 +3,59 @@ import time
 import os
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-web = "https://twitter.com/"
+
+web = "https://twitter.com/i/flow/login"
 driver = webdriver.Chrome()
 driver.get(web)
 driver.maximize_window()
 
 # wait of 6 seconds to let the page load the content
-time.sleep(6)  
 
-login =driver.find_element(By.XPATH,'//a[@href="/login"]')
-login.click()
+# login =driver.find_element(By.XPATH,'//a[@href="/login"]')
+# login.click()
+# print('successfully logged in')
 
-login_box=driver.find_element(By.XPATH,'//div[@class="css-1dbjc4n r-ywje51 r-nllxps r-jxj0sb r-16wqof r-1dye5f7"]')
+login_box = WebDriverWait(driver, 10).until(
+            EC.visibility_of_element_located((By.XPATH, '//div[@class="css-1dbjc4n r-ywje51 r-nllxps r-jxj0sb r-16wqof r-1dye5f7"]'))
+        )
+
 username = login_box.find_element(By.TAG_NAME,'input')
+username.send_keys("kheiraBes")
+next_button=login_box.find_element(By.XPATH,"//div[@class='css-18t94o4 css-1dbjc4n r-sdzlij r-1phboty r-rs99b7 r-ywje51 r-usiww2 r-2yi16 r-1qi8awa r-1ny4l3l r-ymttw5 r-o7ynqc r-6416eg r-lrvibr r-13qz1uu']")
+next_button.click()
+print('successfully logged in')
+time.sleep(20)
+password = driver.find_element(By.XPATH, "//input[@name='password']")   
+print('successfully logged in')
+
+password.send_keys("37074026LKder@")
+print('successfully logged in')
+login_button = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, '//div[@data-testid="LoginForm_Login_Button"]'))
+        )
+login_button.click()
+print('successfully logged in')
+
+
+# driver.get('https://twitter.com/home')
+
+# driver.switch_to.window(driver.window_handles[-1])
+time.sleep(15)
+main_page = driver.find_element(By.XPATH,'//div[@class="css-1dbjc4n r-18u37iz r-13qz1uu r-417010"]')
+print('successfully logged in')
+
+explore=main_page.find_element(By.XPATH,'//a[@href="/explore"]')
+explore.click()
+print('search successfully')
+
+search_label=driver.find_element(By.XPATH,'//div[@class="css-901oao r-18jsvk2 r-6koalj r-37j5jr r-a023e6 r-16dba41 r-rjixqe r-bcqeeo r-qvutc0"]')
+search_word=input('please enter the word u want to search: ')
+search_label.send_keys(search_word)
+print('search successfully')
+
+search_button=driver.find_element(By.XPATH,'//div[@class="css-1dbjc4n r-7q8q6z r-6koalj r-1777fci"]')
+search_button.click()
+print('search successfully')
