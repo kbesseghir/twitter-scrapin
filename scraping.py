@@ -1,5 +1,7 @@
 from selenium import webdriver
 import time
+import pandas as pd
+from selenium.webdriver.common.keys import Keys
 import os
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
@@ -46,16 +48,41 @@ print('successfully logged in')
 time.sleep(15)
 main_page = driver.find_element(By.XPATH,'//div[@class="css-1dbjc4n r-18u37iz r-13qz1uu r-417010"]')
 print('successfully logged in')
-
+time.sleep(5)
 explore=main_page.find_element(By.XPATH,'//a[@href="/explore"]')
 explore.click()
 print('search successfully')
 
-search_label=driver.find_element(By.XPATH,'//div[@class="css-901oao r-18jsvk2 r-6koalj r-37j5jr r-a023e6 r-16dba41 r-rjixqe r-bcqeeo r-qvutc0"]')
-search_word=input('please enter the word u want to search: ')
-search_label.send_keys(search_word)
+print(main_page)
+time.sleep(20)
+
+search_label=driver.find_element(By.XPATH,'//input[@role="combobox"]')
 print('search successfully')
 
-search_button=driver.find_element(By.XPATH,'//div[@class="css-1dbjc4n r-7q8q6z r-6koalj r-1777fci"]')
-search_button.click()
+search_word=input('please enter the word u want to search: ')
+search_label.send_keys(search_word)
+search_label.send_keys(Keys.RETURN)
 print('search successfully')
+
+# search_button=driver.find_element(By.XPATH,'//div[@class="css-1dbjc4n r-7q8q6z r-6koalj r-1777fci"]')
+# search_button.click()
+print('search successfully')
+time.sleep(63)
+section =main_page.find_element(By.XPATH,'//section[@aria-labelledby="accessible-list-7"]')
+tweets=section.find_elements(By.XPATH,'//div[@data-testid="cellInnerDiv"]')
+user_data = []
+text_data = []
+for tweet in tweets:
+    name =tweet.find_elements(By.XPATH,'.//a[@class="css-4rbku5 css-18t94o4 css-1dbjc4n r-1loqt21 r-1wbh5a2 r-dnmrzs r-1ny4l3l"]//span[contains(text(), "@")]').text
+
+    text=tweet.find_elements(By.XPATH,'.//div[@data-testid="tweetText"]').text
+    user_data.append(name)  # appending the first element of tweet_list (user)
+    text_data.append(text)
+    print('secc')
+
+
+driver.quit()
+# Storing the data into a DataFrame and exporting to a csv file
+df_tweets = pd.DataFrame({'user': user_data, 'text': text_data})
+df_tweets.to_csv('tweets.csv', index=False)
+print(df_tweets)
