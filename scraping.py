@@ -25,7 +25,7 @@ login_box = WebDriverWait(driver, 10).until(
         )
 
 username = login_box.find_element(By.TAG_NAME,'input')
-username.send_keys("kheiraBes")
+username.send_keys("write ur username")
 next_button=login_box.find_element(By.XPATH,"//div[@class='css-18t94o4 css-1dbjc4n r-sdzlij r-1phboty r-rs99b7 r-ywje51 r-usiww2 r-2yi16 r-1qi8awa r-1ny4l3l r-ymttw5 r-o7ynqc r-6416eg r-lrvibr r-13qz1uu']")
 next_button.click()
 print('successfully logged in')
@@ -33,7 +33,7 @@ time.sleep(20)
 password = driver.find_element(By.XPATH, "//input[@name='password']")   
 print('successfully logged in')
 
-password.send_keys("37074026LKder@")
+password.send_keys("write ur password ")
 print('successfully logged in')
 login_button = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable((By.XPATH, '//div[@data-testid="LoginForm_Login_Button"]'))
