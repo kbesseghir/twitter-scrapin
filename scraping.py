@@ -49,7 +49,7 @@ time.sleep(20)  # Adjust sleep time if necessary
 
 # Search for tweets
 search_label = driver.find_element(By.XPATH, '//input[@role="combobox"]')
-search_word = input('Please enter the word you want to search: ')
+search_word = input('Please enter the search term: ')
 search_label.send_keys(search_word)
 search_label.send_keys(Keys.RETURN)
 
